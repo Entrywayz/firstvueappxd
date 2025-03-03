@@ -196,8 +196,9 @@ body {
 
 /* Стили формы регистрации */
 .registration-container {
-  width: 90%;
+  width: 100%;
   max-width: 400px;
+  min-width: 280px;
   padding: 20px;
   background: linear-gradient(45deg, #1f5bfe, #741efe, #6c11ff);
   background-size: 400% 400%;
@@ -210,7 +211,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
 }
 
 .form-group {
