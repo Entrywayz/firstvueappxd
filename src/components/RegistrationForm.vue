@@ -1,4 +1,3 @@
-vue.js
 <template>
   <div class="app-container">
     <!-- Приветственное сообщение -->
@@ -144,7 +143,6 @@ body {
   height: 100%;
   line-height: 1.6;
   background: #fff;
-  /* Убираем overflow:hidden, чтобы страница могла прокручиваться, если контент не влезает */
   overflow: auto;
 }
 
@@ -154,12 +152,11 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
-  max-width: 110%;
-  max-height: 100vh;
+  min-height: 100vh;
   width: 100%;
   padding: 20px;
   background: #fff;
-  overflow: hidden; /* Чтобы избежать горизонтального скролла */
+  overflow: hidden;
 }
 
 /* Приветствие и текст о регистрации */
@@ -207,9 +204,8 @@ body {
 
 /* Контейнер формы */
 .registration-container {
-  width: 90%;
+  width: 100%;
   max-width: 400px;
-  min-height: 100vh;
   min-width: 280px;
   padding: 20px;
   background: linear-gradient(45deg, #1f5bfe, #741efe, #6c11ff);
@@ -220,7 +216,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: fixed;
 }
 
 /* Поля формы */
@@ -282,9 +277,6 @@ body {
 /* Адаптив */
 @media (max-width: 500px) {
   .registration-container {
-    .app-container {
-      text-align: center;
-    }
     width: 100%;
     padding: 15px;
   }
