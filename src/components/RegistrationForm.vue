@@ -1,3 +1,4 @@
+vue.js
 <template>
   <div class="app-container">
     <!-- Приветственное сообщение -->
@@ -52,10 +53,12 @@ import axios from "axios";
 export default {
   data() {
     return {
-      showGreeting: true,
-      showRegistrationText: false,
-      showRegistrationForm: false,
+      showGreeting: true,            // Показываем "Привет!"
+      showRegistrationText: false,   // Показываем "Пройди регистрацию"
+      showRegistrationForm: false,   // Показываем форму регистрации
       telegramId: null,
+
+      // Данные формы
       lastName: "",
       firstName: "",
       middleName: "",
@@ -64,6 +67,7 @@ export default {
     };
   },
   watch: {
+    // Когда появляется текст "Чтобы продолжить...", через 3 секунды скрываем его и показываем форму
     showRegistrationText(newVal) {
       if (newVal) {
         setTimeout(() => {
@@ -73,16 +77,19 @@ export default {
     },
   },
   methods: {
+    // Инициализация пользователя из Telegram WebApp
     async initializeTelegramUser() {
       if (window.Telegram?.WebApp) {
         const tg = window.Telegram.WebApp;
         const initData = tg.initDataUnsafe;
-        this.telegramId = initData.user.id;
+        this.telegramId = initData?.user?.id || null;
         tg.expand();
       } else {
         alert("Telegram Web App не поддерживается.");
       }
     },
+
+    // Отправка данных на сервер
     async submitRegistration() {
       const userData = {
         tg_id: this.telegramId,
@@ -97,6 +104,8 @@ export default {
         const response = await axios.post("https://uniback-1.onrender.com/api/register", userData);
         if (response.data.status === "success") {
           alert("Регистрация прошла успешно!");
+        } else {
+          alert("Не удалось зарегистрироваться. Попробуйте снова.");
         }
       } catch (error) {
         console.error("Ошибка при регистрации:", error);
@@ -105,16 +114,19 @@ export default {
     },
   },
   mounted() {
+    // Через 3 секунды убираем приветствие
     setTimeout(() => {
       this.showGreeting = false;
     }, 3000);
+
+    // Инициализируем пользователя из Telegram
     this.initializeTelegramUser();
   },
 };
 </script>
 
 <style scoped>
-/* Основные стили */
+/* Сброс и базовые стили */
 * {
   font-family: "Montserrat", sans-serif;
   box-sizing: border-box;
@@ -132,22 +144,23 @@ body {
   height: 100%;
   line-height: 1.6;
   background: #fff;
-  overflow: hidden;
+  /* Убираем overflow:hidden, чтобы страница могла прокручиваться, если контент не влезает */
+  overflow: auto;
 }
 
+/* Контейнер приложения */
 .app-container {
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   padding: 20px;
-  overflow: hidden;
   background: #fff;
 }
 
-/* Градиентный текст */
+/* Приветствие и текст о регистрации */
 .greeting-message h2,
 .registration-text h3 {
   font-size: 1.5rem;
@@ -155,19 +168,18 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-fill-color: transparent;
+  -webkit-text-fill-color: transparent;
   white-space: normal;
   word-wrap: break-word;
   padding: 0 10px;
   text-align: center;
 }
 
-/* Анимации */
+/* Анимации переходов */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 1s ease;
 }
-
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
@@ -177,48 +189,41 @@ body {
 .slide-up-leave-active {
   transition: transform 0.5s ease, opacity 0.5s ease;
 }
-
 .slide-up-enter-from {
   transform: translateY(100%);
   opacity: 0;
 }
-
 .slide-up-leave-to {
   transform: translateY(-100%);
   opacity: 0;
 }
-
 .slide-up-enter-to,
 .slide-up-leave-from {
   transform: translateY(0);
   opacity: 1;
 }
 
-/* Стили формы регистрации */
+/* Контейнер формы */
 .registration-container {
   width: 100%;
   max-width: 400px;
-  min-width: 280px;
+  min-width: 280px; /* Чтобы на iPhone совсем не сжималось */
   padding: 20px;
   background: linear-gradient(45deg, #1f5bfe, #741efe, #6c11ff);
   background-size: 400% 400%;
   animation: gradient 4s ease infinite;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  position: relative;
-  margin: auto;
-  overflow: visible;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
+  align-items: center;
 }
 
+/* Поля формы */
 .form-group {
   margin-bottom: 15px;
   width: 100%;
 }
-
 .form-group label {
   display: block;
   margin-bottom: 5px;
@@ -226,7 +231,6 @@ body {
   color: #fff;
   font-size: 0.9rem;
 }
-
 .form-group input {
   width: 100%;
   padding: 8px;
@@ -237,11 +241,11 @@ body {
   font-size: 0.9rem;
   box-sizing: border-box;
 }
-
 .form-group input::placeholder {
   color: rgba(255, 255, 255, 0.7);
 }
 
+/* Кнопка */
 .submit-button {
   width: 100%;
   padding: 10px;
@@ -252,29 +256,13 @@ body {
   cursor: pointer;
   transition: background 0.3s ease;
   font-size: 0.9rem;
+  margin-top: 5px;
 }
-
 .submit-button:hover {
   background: #e62ee6;
 }
 
-/* Медиа-запросы для мобильных устройств */
-@media (max-width: 768px) {
-  .registration-container {
-    width: 100%;
-    padding: 15px;
-  }
-
-  .form-group input {
-    font-size: 0.8rem;
-  }
-
-  .submit-button {
-    font-size: 0.8rem;
-    padding: 8px;
-  }
-}
-
+/* Анимация градиента фона */
 @keyframes gradient {
   0% {
     background-position: 0% 50%;
@@ -284,6 +272,22 @@ body {
   }
   100% {
     background-position: 0% 50%;
+  }
+}
+
+/* Адаптив */
+@media (max-width: 500px) {
+  .registration-container {
+    .app-container {
+      text-align: center;
+    }
+    width: 100%;
+    padding: 15px;
+  }
+
+  .greeting-message h2,
+  .registration-text h3 {
+    font-size: 1rem;
   }
 }
 </style>
