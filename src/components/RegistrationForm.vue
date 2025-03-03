@@ -155,9 +155,12 @@ body {
   align-items: center;
   position: relative;
   min-height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
   width: 100%;
   padding: 20px;
   background: #fff;
+  overflow: hidden; /* Чтобы избежать горизонтального скролла */
 }
 
 /* Приветствие и текст о регистрации */
@@ -205,9 +208,9 @@ body {
 
 /* Контейнер формы */
 .registration-container {
-  width: 100%;
+  width: 90%;
   max-width: 400px;
-  min-width: 280px; /* Чтобы на iPhone совсем не сжималось */
+  min-width: 280px;
   padding: 20px;
   background: linear-gradient(45deg, #1f5bfe, #741efe, #6c11ff);
   background-size: 400% 400%;
