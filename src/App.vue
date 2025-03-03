@@ -72,7 +72,8 @@ body {
   align-items: center; /* Центрирование по вертикали */
   position: relative;
   height: 100vh; /* Занимает всю высоту viewport */
-  width: 100%; /* Занимает всю ширину viewport */
+  width: 100%; 
+  max-width: 420px;/* Занимает всю ширину viewport */
   padding: 20px; /* Отступы для контента */
   box-sizing: border-box; /* Включает padding и border в размер элемента */
   background: #fff; /* Белый фон */
