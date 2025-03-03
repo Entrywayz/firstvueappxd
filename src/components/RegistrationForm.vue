@@ -210,6 +210,7 @@ body {
 .registration-container {
   width: 90%;
   max-width: 400px;
+  min-height: 100vh;
   min-width: 280px;
   padding: 20px;
   background: linear-gradient(45deg, #1f5bfe, #741efe, #6c11ff);
@@ -220,6 +221,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: fixed;
 }
 
 /* Поля формы */
