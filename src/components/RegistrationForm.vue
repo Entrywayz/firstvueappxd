@@ -154,8 +154,7 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
-  min-height: 100vh;
-  max-width: 100vw;
+  max-width: 110%;
   max-height: 100vh;
   width: 100%;
   padding: 20px;
